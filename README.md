@@ -1,5 +1,5 @@
 # Today I Learned
-## WEB 
+## Web 
 [쿠키와 세션](https://github.com/hwang11/TIL/blob/master/WEB/%EC%BF%A0%ED%82%A4%EC%99%80%EC%84%B8%EC%85%98.md) 
 
 ## Spring Boot 

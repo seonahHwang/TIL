@@ -7,7 +7,8 @@
 [Java Bean VS Spring Bean]
 
 ## Java 
-## JPA
+## JPA  
+## Git
 <br>
 
 # 기본 지식

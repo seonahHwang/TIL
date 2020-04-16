@@ -26,6 +26,9 @@ $ git reset HEAD~2 // 마지막 2개의 commit을 취소
 $ git reset --hard HEAD^
 ```
 
+<br>
+
+
 ## 📌새로 만든 저장소에 기존 저장소 내용과 history 모두 복제하기
 
 기존 저장소 https://A
@@ -43,11 +46,16 @@ $ git reset --hard HEAD^
 
 출처: https://effectivecode.tistory.com/868 [Mr.후]  
 
+<br>
+
 
 ## 📌git branch 이름 변경  
 ```
 $ git branch -m 변경전_branch_name 새로운_branch_name
 ```  
+<br>
+
+
 
 ## 📌git remote branch 삭제  
 ```

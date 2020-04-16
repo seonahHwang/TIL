@@ -10,7 +10,8 @@
 ## Java 
 ## JPA  
 [연관매핑]  
-## Git
+## Git  
+[git 명령어](https://github.com/hwang11/TIL/blob/master/git/git%EB%AA%85%EB%A0%B9%EC%96%B4.md)
 <br>
 
 # 기본 지식

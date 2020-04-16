@@ -1,5 +1,12 @@
 # Git
 
+[📌commit 취소](#commit-취소)  
+[📌새로 만든 저장소에 기존 저장소 내용과 history 모두 복제하기](#새로-만든-저장소에-기존-저장소-내용과-history-모두-복제하기)  
+[📌git branch 이름 변경](#git-branch-이름-변경)  
+[📌git remote branch 삭제](#git-remote-branch-삭제)
+
+
+
 ## 📌commit 취소
 
 [방법 1] commit을 취소하고 해당 파일들은 staged 상태로 워킹 디렉터리에 보존   

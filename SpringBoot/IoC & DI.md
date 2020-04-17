@@ -22,3 +22,6 @@ Spring은 뷰 영역에 데이터를 출력하고 싶을 때 Java Bean 규약에
 일반 Java Object와 동일하지만 IoC 방식으로 관리되는 오브젝트를 뜻함
 
 Bean은 싱글톤으로 관리된다 
+
+
+출처 : https://sehun-kim.github.io/sehun/springbean-lifecycle/

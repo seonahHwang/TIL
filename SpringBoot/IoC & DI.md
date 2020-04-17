@@ -1,27 +1,25 @@
-# Java Bean VS Spring Bean
+# IoC & DI
 
-## Java Bean
+## IoC ( Inversion of Control ) 제어의 역전
 
-: 데이터를 표현하는 것을 목적으로 하는 자바 클래스 
+스프링을 쓰기전, 개발자가 프로그램의 흐름 제어
 
-Java Bean 규약에 맞춰서 만든 클래스 
+스프링에서는 프레임워크가 프로그램의 흐름 주도  
 
-### <Java Bean 규약>
-1. 기본생성자가 존재해야한다.
-2. 모든 멤버변수의 접근제어자는 private이다.
-3. 멤버변수마다 getter/setter가 존재해야한다. (속성이 boolean일 경우 is를 붙힘)
-4. 외부에서 멤버변수에 접근하기 위해서는 메소드로만 접근할 수 있다.
-5. Serializable(직렬화)가 가능해야한다.
+객체의 생명주기 관리를 컨테이너가 맡음
 
-Spring은 뷰 영역에 데이터를 출력하고 싶을 때 Java Bean 규약에 맞춰 만들어진 객체를 사용하고 객체들을 외부 저장소에 저장/전송 한다 
+제어권이 컨테이너로 넘어감 = 제어의 흐름 바뀜 = 제어의 역전 (IoC)
 
-## Spring Bean
+## DI ( Dependency Injection ) 의존성 주입
 
-: Spring Framework의 Container에 의해 등록, 생성, 조회 되는 객체 
+: 객체간의 의존성을 자신이 아닌 외부에서 주입 
 
-일반 Java Object와 동일하지만 IoC 방식으로 관리되는 오브젝트를 뜻함
+= 객체를 직접 생성하는 게 아니라 외부에서 생성한 후 주입 
 
-Bean은 싱글톤으로 관리된다 
+IoC 방법 중의 하나 
 
+![https://user-images.githubusercontent.com/37287788/78499026-24368880-7789-11ea-863f-603aa49782c1.jpg](https://user-images.githubusercontent.com/37287788/78499026-24368880-7789-11ea-863f-603aa49782c1.jpg)
+
+![Bean%20DI%20IoC/_2020-04-05__9.30.44.png](Bean%20DI%20IoC/_2020-04-05__9.30.44.png)
 
 출처 : https://sehun-kim.github.io/sehun/springbean-lifecycle/

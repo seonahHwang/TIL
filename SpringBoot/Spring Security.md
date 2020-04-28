@@ -37,6 +37,58 @@ User 클래스을 변경해야 하는 경우는 UserDetails 인터페이스를 �
 ## UserDetailsService
 DB에서 유저 정보 가져오는 역할   
 
+## 스프링 시큐리티와 보안 3요소의 매칭
+
+접근주체 ⇒ Authentication
+
+인증 ⇒ Authentication Manager
+
+인가 ⇒ Security Interceptor
+
+## Authentication과 SecurityContext
+
+Authentication의 용도
+
+- 현재 접근 주체 정보를 담는 목적
+- 인증 요청할 때, 요청 정보를 담는 목적
+
+SecurityContext
+
+- Authentication을 보관
+- 스프링 시큐리티는 현재 사용자에 대한 Authentication객체를 구할 때 SecurityContext로 부터 구한다
+
+## SecurityContextHolder
+
+SecurityContext 보관
+
+## Authentication의 주요 메서드
+
+String getName() 사용자의 이름
+
+Object getCredential() 증명 값 (비밀번호 등)
+
+Object getPrincipal() 인증 주체 정보
+
+boolean isAuthenticated() 인증되었는지 여부
+
+Collection<GrantedAuthority> getAuthorities() 현재 사용자가 가진 권한
+
+## AuthenticationManager
+
+인증을 처리함
+
+인증 성공하면 Authentication 객체 리턴
+
+## (Abstract) SecurityInterceptor
+
+인가 처리
+
+- 웹의 경우 FilterSecurityInterceptor 구현 사용
+- AccessDecisionManager에 권한 검사 위임
+
+
+
+
 참고    
 https://sjh836.tistory.com/165  
 https://victorydntmd.tistory.com/328  

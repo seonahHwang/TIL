@@ -25,20 +25,8 @@
 [JOIN 프로그래머스](https://github.com/hwang11/TIL/blob/master/%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4/JOIN_programmers.md)  
 [INDEX]
 ## 네트워크
-[네트워크 첫걸음]  
-### 네트워크
-### 인터넷  
-### 패킷  
-### 비트  
-### 바이트  
-### 랜  
-### 왠  
-### 인터넷서비스 제공자
-### 서버
-### DMZ  
-[네트워크 기본규칙]  
-[물리계층]  
-[데이터 링크 계층]  
+[1장 네트워크 첫걸음](https://github.com/hwang11/TIL/blob/master/%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%81%AC/1%EC%9E%A5%20%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%81%AC%20%EC%B2%AB%EA%B1%B8%EC%9D%8C.md)  
+[2장 네트워크의 기본규칙](https://github.com/hwang11/TIL/blob/master/%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%81%AC/2%EC%9E%A5%20%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%81%AC%EC%9D%98%20%EA%B8%B0%EB%B3%B8%20%EA%B7%9C%EC%B9%99.md)
 
 ### 이더넷  
 ### 허브

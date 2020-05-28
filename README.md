@@ -10,6 +10,8 @@
 [컨테이너](https://github.com/hwang11/TIL/blob/master/SpringBoot/Container.md)  
 [Spring Security](https://github.com/hwang11/TIL/blob/master/SpringBoot/Spring%20Security.md)  
 [Filter](https://github.com/hwang11/TIL/blob/master/SpringBoot/Filter.md)  
+[모델 바인딩과 검증](https://github.com/hwang11/TIL/blob/master/SpringBoot/%EB%AA%A8%EB%8D%B8%20%EB%B0%94%EC%9D%B8%EB%94%A9%EA%B3%BC%20%EA%B2%80%EC%A6%9D.md)  
+
 
 ## Java
 ## JPA  

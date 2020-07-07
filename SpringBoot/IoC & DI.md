@@ -20,6 +20,6 @@ IoC 방법 중의 하나
 
 ![https://user-images.githubusercontent.com/37287788/78499026-24368880-7789-11ea-863f-603aa49782c1.jpg](https://user-images.githubusercontent.com/37287788/78499026-24368880-7789-11ea-863f-603aa49782c1.jpg)
 
-![Bean%20DI%20IoC/_2020-04-05__9.30.44.png](Bean%20DI%20IoC/_2020-04-05__9.30.44.png)
+![Bean%20DI%20IoC/_2020-04-05__9.30.44.png](https://user-images.githubusercontent.com/37287788/79525159-2c51ca80-809d-11ea-9f10-26d952426934.png)
 
 출처 : https://sehun-kim.github.io/sehun/springbean-lifecycle/

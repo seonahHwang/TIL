@@ -16,7 +16,7 @@ Container에 Bean의 메타정볼르 등록하기 위한 방법
   
 ### xml 설정파일을 통한 등록  
 * web.xml
-```
+```java
  <?xml version="1.0" encoding="UTF-8"?>
  <beans>
      <bean id="beanA" class="test.bean.BeanA"/>
@@ -28,7 +28,7 @@ Container에 Bean의 메타정볼르 등록하기 위한 방법
 
 ### Java Config를 이용한 등록  
 * WebConfig
- ```
+ ```java
  @Configuration
  public class WebConfig {
    @Bean(name = "beanA")

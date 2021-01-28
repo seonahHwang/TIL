@@ -16,7 +16,6 @@ RetryPolicy를 어떻게 Job에 적용할지?
 
 Skip의 횟수를 관리하는 Counter가 있는데 read, process, write 별로 분리되어 있으며, skip-limit에는 각 Counter의 합계가 적용된다.
 
-### 11/29 일
 
 FaultTolerant
 

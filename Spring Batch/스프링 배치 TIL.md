@@ -47,6 +47,15 @@ JobInstance를 식별하는 유일한 값
 @JobScope
 
 @StepScope
+Job이 실행될때 step을 bean으로 등록하는 어노테이션
+
+step을 조건부로 실행 할 때 스텝에 @jobscope가 붙어있으면,
+
+실행시켜 결과를 확인해야하지만 job이 실행되기전에는 스텝이 bean으로 등록되어있지않아서 문제
+
+따라서 조건부로 실행할때는 @jobscope를 붙이지 않는게 좋겠다
+
+tasklet은 실제 실행시에 돌아간다. bean등록시 말고! 
 
 # Skip Retry Restart
 ## Skip

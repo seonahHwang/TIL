@@ -1,8 +1,8 @@
 # Exception
 
 # Checked / Unchecked Exception
+<img width="805" alt="스크린샷 2021-03-16 오후 9 31 54" src="https://user-images.githubusercontent.com/37287788/111310645-acfbbb00-86a0-11eb-8873-3ab47a05bc99.png">
 
-![Exception%200fab1b268a224d26a94ef91becb5b036/_2021-03-16__9.31.54.png](Exception%200fab1b268a224d26a94ef91becb5b036/_2021-03-16__9.31.54.png)
 
 출처 : [https://itmining.tistory.com/9](https://itmining.tistory.com/9)
 

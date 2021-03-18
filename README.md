@@ -14,7 +14,7 @@
 
 
 ## Java  
-runtimeException
+runtimeException. 
 ## JPA  
 [연관매핑]  
 ## Git  

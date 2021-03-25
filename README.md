@@ -18,7 +18,7 @@ runtimeException
 ## JPA  
 [연관매핑]  
 ## Git  
-[git 명령어](https://github.com/hwang11/TIL/blob/master/git/git%EB%AA%85%EB%A0%B9%EC%96%B4.md)
+[git 명령어](https://github.com/hwang11/TIL/blob/master/git/git%EB%AA%85%EB%A0%B9%EC%96%B4.md). 
 <br>
 <br>
 # 부스트코스 웹프로그래밍  

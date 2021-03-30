@@ -123,4 +123,72 @@ step 시작 전/후의 리스너
 1. 적절한 skip 메서드를 아이템 마다 한번만 호출한다
 2. SkipListener는 항상 트랜잭션이 커밋되기 직전에 호출
 
-    따라서 writer에서 오류가 발생해도 리스너에서 호출하는 트랜잭션까지 롤백되지 않는다
+    따라서 writer에서 오류가 발생해도 리스너에서 호출하는 트랜잭션까지 롤백되지 않는다 
+
+# 5.2 TaskletStep
+
+Tasklet : execute 메소드 하나를 가진 인터페이스 
+
+RepeatStatus.FINISHED가 리턴되거나 실패했단 뜻으로 exception이 던져지기 전까지 
+
+TaskletStep 이 반복적으로 execute 호출
+
+- 각 Tasklet 호출이 트랜잭션으로 감싸져 있다.
+- tasklet이 stepListener 인터페이스를 구현했다면 TaskletStep 이 자동으로 tasklet을 stepListener로 등록
+
+## 5.2.1 TaskletAdapter
+
+# 5.3 Controlling Step Flow
+
+step이 실패했다고 반드시 job도 실패로 끝나야하는것이 아니다
+
+step성공이 모두 같은 성공은 아니다
+
+## 5.3.1 Sequential Flow
+
+next attribute 사용 
+
+```java
+@Bean
+public Job job() {
+	return this.jobBuilderFactory.get("job")
+				.start(stepA())
+				.next(stepB())
+				.next(stepC())
+				.build();
+}
+```
+
+stepA가 실패하면 전체 job이 실패로 끝나 stepB 는 실행 X
+
+## 5.3.2 Conditional Flow
+
+한개의 step이 next attribute와 transition element를 둘 다 가질 수는 없다.
+
+```java
+@Bean
+public Job job() {
+	return this.jobBuilderFactory.get("job")
+				.start(stepA())
+				.on("*").to(stepB())
+				.from(stepA()).on("FAILED").to(stepC())
+				.end()
+				.build();
+}
+```
+
+on은 step의 ExitStatus와 매칭
+
+Step은 transition element 수에 제한이 없긴 하지만, Step의 결과로 받은 ExitStatus가 어떤 element와도 매칭되지 않으면 프레임워크 단에서 예외을 발생시키고 Job은 실패한다.
+
+### Batch Status Versus Exit Status
+
+`BatchStatus`는 JobExecution과 StepExecution의 프로퍼티로, 
+
+단순 열거형(enumeration)이며 Job과 Step의 상태를 나타낸다
+
+COMPLETED, STARTING, STARTED, STOPPING, STOPPED, FAILED, ABANDONED, UNKNOWN
+
+on()메서드는 BatchStatus가 아닌 Step의 ExitStatus를 참조
+
+## 5.3.3. Configuring for Stop

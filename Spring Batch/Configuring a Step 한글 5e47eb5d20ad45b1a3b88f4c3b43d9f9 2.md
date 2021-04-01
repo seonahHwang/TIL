@@ -192,3 +192,205 @@ COMPLETED, STARTING, STARTED, STOPPING, STOPPED, FAILED, ABANDONED, UNKNOWN
 on()메서드는 BatchStatus가 아닌 Step의 ExitStatus를 참조
 
 ## 5.3.3. Configuring for Stop
+
+Step의 상태는 실행되는 코드로 결정
+
+Job의 상태는 설정에 따라 달라짐
+
+Step에 정의된 transition이 없다면 아래 규칙으로 Job 상태 정의
+
+- Step이 끝나고 ExitStatus FAILED를 리턴했다면, Job의 BatchStatus와 ExitStatus도 FAILED이다
+- 그 외에는 Job의 ExitStatus, BatchStatus모두 COMPLETED
+
+### Job을 종료시키기 위한 transition element 3가지
+
+### Ending at s Step
+
+step이 끝나기만 하면 Job의 BatchStatus를 COMPLETED로 둔 채 종료 가능
+
+`end()` end메서드에 Job의 ExitStatus를 커스텀할 수 있는 ExitStatus 파라미터를 넘길 수도 있다
+
+디폴트는 COMPLETED
+
+```java
+@Bean
+public Job job() {
+	return this.jobBuilderFactory.get("job")
+				.start(step1())
+				.next(step2())
+				.on("FAILED").end() // step2 fail이면 job 종료. step3은 실행되지 않음 
+														//job BatchStatus가 COMPLETED인 상태로 종료이므로 
+														//재시작해도 다시실행되지않음
+				.from(step2()).on("*").to(step3())
+				.end()
+				.build();
+}
+
+```
+
+### Failing a Step
+
+아래 예제에서는 `step2`가 실패하면 `Job`의 `BatchStatus`는 `FAILED`, `ExitStatus`는 `EARLY TERMINATION`으로 두고 종료되며, `step3`를 실행하지 않는다. 
+
+반대로 `step2`가 성공하면 다음은 `step3`를 실행한다. 
+
+`step2`가 실패해서 `Job`을 재시작하면 `step2`부터 다시 실행한다.
+
+```java
+@Bean
+public Job job() {
+	return this.jobBuilderFactory.get("job")
+			.start(step1())
+			.next(step2()).on("FAILED").fail()
+			.from(step2()).on("*").to(step3())
+			.end()
+			.build();
+}
+```
+
+### Stopping a Job at a Given Step
+
+특정 step에서 작업을 중단하도록 설정하면 BatchStatus가 STOPPED인 상태로 Job종료
+
+Job을 중단하면 중간에 텀이 생겨 Job을 재시작하기 전 액션을 실행할 수 있다
+
+아래 예제에서는 `step1`이 `COMPLETE`로 끝나면 job을 중단한다. 재시작되면 `step2`를 시작한다.
+
+```java
+@Bean
+public Job job() {
+	return this.jobBuilderFactory.get("job")
+			.start(step1()).on("COMPLETED").stopAndRestart(step2())
+			.end()
+			.build();
+}
+```
+
+## 5.3.4 Programmatic Flow Decisions
+
+다음 step을 결정하기 위한 조건
+
+JobExecutionDecider
+
+```java
+public class MyDecider implements JobExecutionDecider {
+    public FlowExecutionStatus decide(JobExecution jobExecution, StepExecution stepExecution) {
+        String status;
+        if (someCondition()) {
+            status = "FAILED";
+        }
+        else {
+            status = "COMPLETED";
+        }
+        return new FlowExecutionStatus(status);
+    }
+}
+아래 예제에선 자바 기반 설정을 사용해 JobExecutionDecider를 구현한 빈을 next 호출부에 직접 넘긴다.
+
+@Bean
+public Job job() {
+	return this.jobBuilderFactory.get("job")
+			.start(step1())
+			.next(decider()).on("FAILED").to(step2())
+			.from(decider()).on("COMPLETED").to(step3())
+			.end()
+			.build();
+}
+```
+
+## 5.3.5 Split Flows
+
+병렬 플로우 
+
+‘split’ element는 ‘next’ attribute, ‘next’, ‘end’, ‘fail’ element같이 앞에 나온 transition element라면 어떤 것이든 포함할 수 있다.
+
+```java
+@Bean
+public Job job() {
+	Flow flow1 = new FlowBuilder<SimpleFlow>("flow1")
+			.start(step1())
+			.next(step2())
+			.build();
+	Flow flow2 = new FlowBuilder<SimpleFlow>("flow2")
+			.start(step3())
+			.build();
+
+	return this.jobBuilderFactory.get("job")
+				.start(flow1)
+				.split(new SimpleAsyncTaskExecutor())
+				.add(flow2)
+				.next(step4())
+				.end()
+				.build();
+}
+```
+
+## 5.3.6 Externalizing Flow Definitions and Dependencies Between Jobs
+
+flow는 빈으로 따로 정의해서 재사용도 가능 
+
+```java
+@Bean
+public Job job() {
+	return this.jobBuilderFactory.get("job")
+				.start(flow1())
+				.next(step3())
+				.end()
+				.build();
+}
+
+@Bean
+public Flow flow1() {
+	return new FlowBuilder<SimpleFlow>("flow1")
+			.start(step1())
+			.next(step2())
+			.build();
+}
+```
+
+외부 flow를 사용하는 또하나의 방법은  Jobstep 활용
+
+```java
+
+@Bean
+public Job jobStepJob() {
+	return this.jobBuilderFactory.get("jobStepJob")
+				.start(jobStepJobStep1(null))
+				.build();
+}
+
+@Bean
+public Step jobStepJobStep1(JobLauncher jobLauncher) { //step안에서 job실행 
+	return this.stepBuilderFactory.get("jobStepJobStep1")
+				.job(job())
+				.launcher(jobLauncher)
+				.parametersExtractor(jobParametersExtractor()) 
+//jobParametersExtractor는 Step의 ExecutionContext를 Job이 실행되는 데 
+//필요한 JobParameters로 변환하는 방법을 정의한다
+				.build();
+}
+
+@Bean
+public Job job() {
+	return this.jobBuilderFactory.get("job")
+				.start(step1())
+				.build();
+}
+
+@Bean
+public DefaultJobParametersExtractor jobParametersExtractor() {
+	DefaultJobParametersExtractor extractor = new DefaultJobParametersExtractor();
+
+	extractor.setKeys(new String[]{"input.file"});
+
+	return extractor;
+}
+```
+
+# 5.4 Late Binding of Job and Step Attributes
+
+job을 실행하는 시점마다 bean으로 등록되서
+
+프로퍼티에 있는 값을 그 때마다 읽어오는게 되는걸까??
+
+다시 이해하기..

@@ -389,8 +389,68 @@ public DefaultJobParametersExtractor jobParametersExtractor() {
 
 # 5.4 Late Binding of Job and Step Attributes
 
-job을 실행하는 시점마다 bean으로 등록되서
+(job을 실행하는 시점마다 bean으로 등록되서
 
-프로퍼티에 있는 값을 그 때마다 읽어오는게 되는걸까??
+프로퍼티에 있는 값을 그 때마다 읽어오는게 되는걸까?? 
 
-다시 이해하기..
+→ 프로퍼티에 있는 값이 아니라, 보통 program Argument로 jobParameter 전달 )
+
+JobScope, StepScope 역시 Job이 실행되고 끝날때, Step이 실행되고 끝날때 생성/삭제가 이루어진다고 보시면 됩니다.
+
+@JobScope는 Step 선언문에서 사용 가능하고, @StepScope는 Tasklet이나 ItemReader, ItemWriter, ItemProcessor에서 사용할 수 있습니다.
+
+```java
+@StepScope
+@Bean
+public FlatFileItemReader flatFileItemReader(@Value("#{jobParameters['input.file.name']}") String name) {
+	return new FlatFileItemReaderBuilder<Foo>()
+			.name("flatFileItemReader")
+			.resource(new FileSystemResource(name))
+			...
+}
+//JobExecution, StepExecution 레벨의 ExecutionContext 모두 같은 방식으로 사용할 수 있다:
+
+//jobExecutionContext에 있는 input.file.name 가져오기 
+@StepScope
+@Bean
+public FlatFileItemReader flatFileItemReader(@Value("#{jobExecutionContext['input.file.name']}") String name) {
+	return new FlatFileItemReaderBuilder<Foo>()
+			.name("flatFileItemReader")
+			.resource(new FileSystemResource(name))
+			...
+}
+
+//stepExecutionContext에 있는 input.file.name 가져오기 
+@StepScope
+@Bean
+public FlatFileItemReader flatFileItemReader(@Value("#{stepExecutionContext['input.file.name']}") String name) {
+	return new FlatFileItemReaderBuilder<Foo>()
+			.name("flatFileItemReader")
+			.resource(new FileSystemResource(name))
+			...
+}
+```
+
+### JobParameter 내용 보충
+
+JobParameter를 사용하기 위해서는 꼭 @StepScope, @JobScope로 Bean을 생성해야한다
+
+JobParmeter는 Step, Tasklet, Reader 등 Batch 컴포넌트 Bean의 생성 시점에 호출 할 수 있음 
+
+@StepScope, @JobScope Bean을 생성할때만 JobParameters가 생성
+
+### JobParameter VS 시스템 변수
+
+1. 시스템변수를 사용하면 Spring Batch의 Job Parameter관련 기능을 못쓰게됨
+
+parameter관련 메타테이블이 전혀 관리되지 않음
+
+2. Command Line이 아닌 다른 방법으로 job 실행하기가 어려움
+
+다른 방법으로 실행하려면 시스템 변수 또는 환경변수를 동적으로 계속 변경시킬수 있어야함 
+
+예를 들어, Jobparameter를 이용한다면 
+
+외부에서 (컨트롤러 등) parameter값을 받아와 그걸로 job 수행 가능
+
+즉, 개발자가 원하는 어느 타이밍이든 Job Paramter를 생성하고 수행할 수 있음

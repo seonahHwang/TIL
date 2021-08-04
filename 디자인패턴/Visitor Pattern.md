@@ -42,4 +42,10 @@ accept(Visitor)를 공용 인터페이스로 쓴다
 
 커맨드 패턴은 1:1
 
-비지터 패턴은 N:N
+비지터 패턴은 N:N. 
+
+
+![이론스터디-8](https://user-images.githubusercontent.com/37287788/128259835-3e996752-ad09-47cd-810d-00617a0765d9.jpg)
+![이론스터디-7](https://user-images.githubusercontent.com/37287788/128259845-dd3960ad-0056-45b8-a42b-968aa3e50307.jpg)
+
+

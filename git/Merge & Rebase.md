@@ -26,7 +26,7 @@ git merge feature
 위의 예제는 아래와 같은 명령으로 Rebase 한다.
 
 `$ git checkout experiment
-$ git rebase master
+$ git rebase master 
 First, rewinding head to replay your work on top of it...
 Applying: added staged command`
 
